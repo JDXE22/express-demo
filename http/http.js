@@ -10,7 +10,7 @@ const processRequest = (req, res) => {
     res.end("Welcome to my homepage");
   } else if (req.url === '/image.jpg') {
     res.setHeader("Content-Type", "image/jpg")
-    fs.readFile("./image.jpg", (err, data)=> {
+    fs.readFile("common/image.jpg", (err, data)=> {
         if (err) {
             res.statusCode = 500
             res.end('<h1> 500 Internal Server Error </h1>')
