@@ -7,5 +7,6 @@ Content-Type: application/json
 
 {
     "name": "Pikachu",
-    "type": "Electric"
+    "type": "Electric",
+    "moves": ["Thunderbolt"]
 }

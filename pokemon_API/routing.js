@@ -10,11 +10,12 @@ const processRequest = (req, res) => {
         case "/pokemon/ditto":
           res.setHeader("Content-Type", "application/json; charset=utf-8");
           return res.end(JSON.stringify(json));
-      }
+        }
+        break;
 
     case "POST":
       switch (url) {
-        case "/pokemon":
+        case "/pokemon": {
           let body = "";
 
           req.on("data", (chunk) => {
@@ -22,13 +23,15 @@ const processRequest = (req, res) => {
           });
 
           req.on("end", () => {
+            const data = JSON.parse(body);
             res.writeHead(201, {
               "Content-Type": "application/json; charset=utf-8",
             });
             res.end(JSON.stringify(data));
           });
 
-          break;
+          return;
+        }
       }
 
     default:
