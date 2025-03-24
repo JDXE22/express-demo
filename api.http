@@ -1,1 +1,11 @@
+### Get Pokemon Ditto
 GET http://localhost:3000/pokemon/ditto
+
+### Create Pokemon
+POST http://localhost:3000/pokemon
+Content-Type: application/json
+
+{
+    "name": "Pikachu",
+    "type": "Electric"
+}
