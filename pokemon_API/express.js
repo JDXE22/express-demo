@@ -4,23 +4,25 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-app.use((req, res, next) => {
-  if (req.method !== "POST") return next();
+app.use(express.json());
 
-  if (req.headers["content-type"] !== "application/json") return next();
+// app.use((req, res, next) => {
+//   if (req.method !== "POST") return next();
 
-  let body = "";
+//   if (req.headers["content-type"] !== "application/json") return next();
 
-  req.on("data", (chunk) => {
-    body += chunk.toString();
-  });
+//   let body = "";
 
-  req.on("end", () => {
-    const data = JSON.parse(body);
-    req.body = data;
-    next();
-  });
-});
+//   req.on("data", (chunk) => {
+//     body += chunk.toString();
+//   });
+
+//   req.on("end", () => {
+//     const data = JSON.parse(body);
+//     req.body = data;
+//     next();
+//   });
+// });
 
 app.get("/pokemon/ditto", (req, res) => {
   res.json(ditto);
