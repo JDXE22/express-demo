@@ -4,11 +4,11 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-app.get("/pokemon/ditto", (req, res) => {
-  res.json(ditto)
-});
+app.use((req, res, next) => {
+  if (req.method !== "POST") return next();
 
-app.post("/pokemon", (req, res) => {
+  if (req.headers["content-type"] !== "application/json") return next();
+
   let body = "";
 
   req.on("data", (chunk) => {
@@ -17,18 +17,22 @@ app.post("/pokemon", (req, res) => {
 
   req.on("end", () => {
     const data = JSON.parse(body);
-    // res.writeHead(201, {
-    //   "Content-Type": "application/json; charset=utf-8",
-    // });
-    // res.end(JSON.stringify(data));
-    res.status(201).json(data)
+    req.body = data;
+    next();
   });
+});
+
+app.get("/pokemon/ditto", (req, res) => {
+  res.json(ditto);
+});
+
+app.post("/pokemon", (req, res) => {
+  res.status(201).json(req.body);
 });
 
 app.use((req, res) => {
   res.status(404).send("<h1>404 Not Found</h1>");
-})
-
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`);
