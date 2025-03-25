@@ -1,7 +1,8 @@
 const express = require("express");
 const movies = require("./movies.json");
 const app = express();
-
+const crypto = require("node:crypto");
+app.use(express.json());
 app.disable("x-powered-by");
 
 app.get("/", (req, res) => {
@@ -27,6 +28,26 @@ app.get("/movies/:id", (req, res) => {
 
   res.status(404).json({ message: "Movie not found" });
 });
+
+app.post("/movies", (req, res) => { 
+  const { title, director, year, rate, genre, duration, poster } = req.body;
+  
+  const newMovie = {
+    id: crypto.randomUUID(),
+    title,
+    director,
+    year,
+    rate: rate ?? 0,
+    genre,
+    duration,
+    poster,
+  }
+
+  movies.push(newMovie)
+
+  res.status(201).json(newMovie)
+
+})
 
 const PORT = process.env.PORT || 3000;
 
