@@ -1,10 +1,11 @@
+const ditto = require("./pokemon/ditto.json");
 const express = require("express");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-  res.status(200).send("<h1>My page!</h1>");
+app.get("/pokemon/ditto", (req, res) => {
+  res.json(ditto)
 });
 
 app.post("/pokemon", (req, res) => {
@@ -23,6 +24,11 @@ app.post("/pokemon", (req, res) => {
     res.status(201).json(data)
   });
 });
+
+app.use((req, res) => {
+  res.status(404).send("<h1>404 Not Found</h1>");
+})
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`);
