@@ -31,8 +31,13 @@ const movieSchema = z.object({
   ),
 });
 
-function validateMovie(movie) {
-    return movieSchema.safeParse(movie)
+function validateMovie(input) {
+    return movieSchema.safeParse(input)
 }
 
-module.exports = { validateMovie };
+function validatePartialMovie(input){
+  return movieSchema.partial().safeParse(input)
+}
+
+module.exports = { validateMovie, validatePartialMovie
+ };

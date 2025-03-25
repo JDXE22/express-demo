@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API Rest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        article {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 1rem;
+        }
+        img {
+            height: auto;
+            width: 320px;
+            border-radius: 5px;
+        }
+        h2 {
+            margin: 0;
+            margin-top: 1rem;
+        }
+        p {
+            margin: 0;
+            margin-top: 1rem;
+        }
+    </style>
+    <script type="module">
+        fetch("http://localhost:3000/movies")
+        .then(res => res.json())
+        .them(movies => {
+            const html = movies.map(movie => {
+                return `<article data-id="${movie.id}">
+                    <img src="${movie.image}" alt="${movie.title}">
+                    <h2>${movie.title}</h2>
+                    <p>${movie.description}</p>
+                    </article>`
+            }).join("")
+        })
+
+        document.querySelector("main").innerHTML = html
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
