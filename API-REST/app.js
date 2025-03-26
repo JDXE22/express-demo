@@ -1,8 +1,33 @@
 const express = require("express");
 const movies = require("./movies.json");
-const app = express();
 const crypto = require("node:crypto");
+const cors = require("cors");
 const { validateMovie, validatePartialMovie } = require("./schemas/movies");
+
+const app = express();
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      const ACCEPTED_ORIGINS = [
+        "http://localhost:8080",
+        "http://localhost:3000",
+        "https://movies.com",
+        "https://localhost:1"
+      ];
+      
+      if (ACCEPTED_ORIGINS.includes(origin)) {
+        return callback(null,true)
+      }
+
+      if (!origin) {
+        return callback(null,true)
+      }
+
+      return callback(new Error("Not allower by CORS"))
+    },
+  })
+);
 
 app.use(express.json());
 app.disable("x-powered-by");
@@ -12,6 +37,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/movies", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   const { genre } = req.query;
   if (genre) {
     const filteredMovies = movies.filter((movie) =>
@@ -48,9 +74,20 @@ app.post("/movies", (req, res) => {
   res.status(201).json(newMovie);
 });
 
+app.delete("/movies/:id", (req, res) => {
+  const id = req.params.id;
+  const movieIndex = movies.findIndex((movie) => movie.id === id);
+  if (movieIndex === -1) {
+    return res.status(404).json({ message: "Movie not found" });
+  }
+
+  movies.splice(movieIndex, 1);
+  return res.json({ message: "Movie deleted" });
+});
+
 app.patch("/movies/:id", (req, res) => {
   const { id } = req.params;
-  const result = validatePartialMovie(req.body)
+  const result = validatePartialMovie(req.body);
 
   if (!result.success) {
     return res.status(422).json({ error: JSON.parse(result.error.message) });
@@ -65,7 +102,7 @@ app.patch("/movies/:id", (req, res) => {
   const updateMovie = {
     ...movies[movieIndex],
     ...result.data,
-  }
+  };
 
   return res.json(updateMovie);
 });
@@ -73,5 +110,5 @@ app.patch("/movies/:id", (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}/`);
 });
