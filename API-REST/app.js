@@ -1,8 +1,8 @@
-const express = require("express");
-const movies = require("./movies.json");
-const crypto = require("node:crypto");
-const cors = require("cors");
-const { validateMovie, validatePartialMovie } = require("./schemas/movies");
+import express, { json } from "express";
+import movies from "./movies.json" with {type:"json"};
+import { randomUUID } from "node:crypto";
+import cors from "cors";
+import { validateMovie, validatePartialMovie } from "./schemas/movies.js";
 
 const app = express();
 
@@ -24,12 +24,12 @@ app.use(
         return callback(null,true)
       }
 
-      return callback(new Error("Not allower by CORS"))
+      return callback(new Error("Not allowed by CORS"))
     },
   })
 );
 
-app.use(express.json());
+app.use(json());
 app.disable("x-powered-by");
 
 app.get("/", (req, res) => {
@@ -65,7 +65,7 @@ app.post("/movies", (req, res) => {
   }
 
   const newMovie = {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     ...result.data,
   };
 
@@ -93,7 +93,7 @@ app.patch("/movies/:id", (req, res) => {
     return res.status(422).json({ error: JSON.parse(result.error.message) });
   }
 
-  const movieIndex = movies.findIndex((movie) => movie.id === id);
+  const movieIndex = findIndex((movie) => movie.id === id);
 
   if (movieIndex === -1) {
     return res.status(404).json({ message: "Movie not found" });
