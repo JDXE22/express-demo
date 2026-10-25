@@ -14,3 +14,5 @@ function cambiarCita() {
 }
 
 cambiarCita(); // Llamada inicial para mostrar una cita al cargar la página
+
+botonElem.addEventListener('click', cambiarCita);
