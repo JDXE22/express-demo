@@ -45,3 +45,29 @@ body {
   text-align: center;
   font-family: 'Courgette', cursive;
 }
+
+#cita {
+  font-size: 1.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 10px;
+}
+
+#autor {
+  width: 100%;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Courgette', cursive;
+}
+
+#boton-cambiar-cita {
+  width: 180px;
+  height: 50px;
+  font-size: 1.2rem;
+}
