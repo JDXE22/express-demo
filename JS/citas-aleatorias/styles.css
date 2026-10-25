@@ -1,0 +1,47 @@
+/* Estilos generales */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background: url(img/libreria.jpg) no-repeat center center/cover;
+}
+
+.contenido-centrado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenedor {
+  width: 80vh;
+  max-width: 600px;
+  min-height: 500px;
+  padding: 20px;
+  background-color: white;
+  border: 5px solid black;
+  border-radius: 30px;
+}
+
+.contenedor-interno {
+  width: 80%;
+}
+
+/* Contenido */
+
+#titulo {
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Courgette', cursive;
+}
